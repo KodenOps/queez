@@ -101,8 +101,10 @@ const Game = ({ gameData }) => {
 										</button>
 									</div>
 								))}
+							</div>
+							<div className='w-full flex items-center justify-center  '>
 								<button
-									className='p-[10px] border-[2px] border-[var(--white)] w-full md:w-[15vw] gap-[20px] rounded-lg bg-red-500 md:mt-[100px] mt-[30px]'
+									className='p-[20px] border-[2px] border-white text-white min-w-[60vw]  md:min-w-[25vw]  gap-[20px] rounded-lg bg-red-500 md:mt-[100px] mt-[30px]'
 									onClick={() => {
 										setindex(11);
 										shuffle();
