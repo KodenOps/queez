@@ -7,15 +7,15 @@ const PlayRandom = () => {
 	return (
 		<section className='bg-[var(--primaryBg)] min-h-screen z-30 pb-[40px] overflow-auto  '>
 			<Navbar />
-			<div className='questionBox md:w-[40%] w-[80%] mx-[10%] md:mx-[30%] h-auto bg-[var(--secondbg)] rounded-xl p-[30px] md:mt-[100px] absolute z-30'>
+			<div className='questionBox md:w-[40%] w-[80%] mx-[10%] md:mx-[30%] h-auto bg-[var(--secondbg)] rounded-xl p-[30px] md:mt-[30px] absolute z-30'>
 				<h2 className='text-lg text-center text-[var(--secondary)] font-bold mb-[30px]'>
 					Still cooking up this page.
 				</h2>
-				{/* <img
+				<img
 					src={cooking}
-					alt=""
-					className="md:w-[20%] flex items-center justify-center md:mx-[40%]"
-				/> */}
+					alt=''
+					className='md:w-[50%] flex items-center justify-center md:mx-[25%] my-4'
+				/>
 				<Link
 					to='/selectgame'
 					className='p-[12px] md:w-[50%] md:mx-[25%] w-full text-[var(--secondary)] border-[var(--secondary)] border-[2px] block text-center rounded-lg hover:bg-white transition-color duration-[1s] hover:text-[var(--primaryBg)]'>
