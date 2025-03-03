@@ -20,12 +20,12 @@ const SelectGame = () => {
 			<div className=' w-[90vw] mx-[5vw] sm:w-[60vw] sm:mx-[20vw] md:mt-[3vh] mt-[1vh] px-[24px]  py-[32px] absolute rounded-lg z-0 flex items-center justify-center bg-white border-2 border-[var(--secondary)] '>
 				<div className='h-full w-full text-black   z-10 overflow-y-scroll overflow-x-hidden '>
 					<h4 className='text-[var(--deepBlue)] text-center z-10  text-[24px] font-extrabold'>
-						Choose Your Starting Point
+						Welcome To IQueez{'! '}
 					</h4>
 					<p className='text-center mt-[2px] z-10 mb-[10px] pb-[5px]'>
-						Welcome to IQueez. You have two options to learn about countries.
-						Either play a queez game or search for any country you want and
-						learn basic stuff about them. So, Where should we start?
+						You have two options to learn about countries. Either play a queez
+						game or search for any country you want and learn basic stuff about
+						them. So, Where should we start?
 					</p>
 					<div className='btn flex justify-center items-center md:flex-row flex-col gap-[5%]'>
 						<Link
