@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Game = ({ gameData }) => {
+const Game = ({ gameData, question, question2 }) => {
 	const [index, setindex] = useState(1);
 	const [score, setscore] = useState(0);
 	const [remark, setremark] = useState(
@@ -71,7 +71,7 @@ const Game = ({ gameData }) => {
 									{index}/10 ===== {e.level} Level
 								</p>
 								<p className='md:text-3xl text-xl md:text-left text-center text-[var(--secondary)]'>
-									What is the capital of {e.name}
+									{question} {e.name} {question2}
 								</p>
 							</div>
 							{/* the option section */}

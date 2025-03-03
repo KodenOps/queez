@@ -7,7 +7,10 @@ const PlayEasy = () => {
 	return (
 		<section className='bg-[var(--primaryBg)] min-h-screen z-30 pb-[40px] overflow-auto'>
 			<Navbar />
-			<Game gameData={CountriesCapitalMediumObj} />
+			<Game
+				gameData={CountriesCapitalMediumObj}
+				question='What is the Capital of '
+			/>
 			{/* The infrastructure bg */}
 			<div className='absolute z-0  bottom-0 top-[1vh] md:top-0 md:w-[100vw] w-[200vw] right-0 h-[100vh] object-fill overflow-y-hidden'>
 				<img

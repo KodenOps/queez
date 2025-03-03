@@ -8,7 +8,10 @@ const PlayBoss = () => {
 		<section className='bg-[var(--primaryBg)] min-h-screen  z-30 pb-[40px] overflow-auto'>
 			<Navbar />
 			<div className='md:mt-16'>
-				<Game gameData={CountriesCapitalBossObj} />
+				<Game
+					gameData={CountriesCapitalBossObj}
+					question='What is the Capital of '
+				/>
 			</div>
 			{/* The infrastructure bg */}
 			<div className='absolute z-0  bottom-0 top-[1vh] md:top-0 md:w-[100vw] w-[200vw] right-0 h-[100vh] object-fill overflow-y-hidden'>
