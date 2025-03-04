@@ -59,7 +59,7 @@ const Game = ({ gameData, question, question2 }) => {
 	}
 
 	return index <= 10 ? (
-		<div className='questionBox absolute z-10 w-[90%] mx-[5%] mt-[10vh]  '>
+		<div className='questionBox absolute z-10 w-[90%] mx-[5%] md:mt-[10vh]  '>
 			{levels
 				.filter((item) => item.id === index)
 				.map((e) => {
