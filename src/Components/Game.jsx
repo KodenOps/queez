@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Game = ({ gameData, question, question2 }) => {
@@ -7,133 +7,113 @@ const Game = ({ gameData, question, question2 }) => {
 	const [remark, setremark] = useState(
 		"Giving up is okay. But doing that without even trying first? That's a dick move!"
 	);
+	const [shuffledQuestions, setShuffledQuestions] = useState([]);
+	const [shuffledOptions, setShuffledOptions] = useState([]);
 
-	let levels = gameData;
-
-	function shuffle() {
-		for (let i = 0; i <= levels.length - 1; i++) {
+	// Fisher-Yates Shuffle Algorithm
+	const shuffle = (array) => {
+		let shuffledArray = [...array];
+		for (let i = shuffledArray.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
-			const temp = levels[i];
-
-			levels[i] = levels[j];
-			temp.id = i;
-			levels[j] = temp;
+			[shuffledArray[i], shuffledArray[j]] = [
+				shuffledArray[j],
+				shuffledArray[i],
+			];
 		}
-	}
+		return shuffledArray;
+	};
 
-	function getRemark() {
-		switch (score) {
-			case '':
-				setscore(0);
-				setremark(
-					"Giving up is okay. But doing that without even trying first? That's a dick move!"
-				);
-				break;
-			case 0:
-				setremark('Your head big and empty. It should be used as a cupboard.');
-				break;
-			case 1:
-			case 2:
-			case 3:
-				setremark('Bad news mate! You are too Dumb');
-				break;
-			case 4:
-			case 5:
-			case 6:
-				setremark('You tried, but you need to improve');
-				break;
-			case 7:
-			case 8:
-			case 9:
-				setremark('You are smart. Keep it up');
-				break;
-			case 10:
-				setremark('You are on fire! Try another level');
-				break;
-			default:
-				setremark(
-					"Giving up is okay. But doing that without even trying first? That's a dick move!"
-				);
-				break;
+	// Get remark based on score
+	const getRemark = (score) => {
+		if (score === 0)
+			return 'Your head big and empty. It should be used as a cupboard.';
+		if (score <= 3) return 'Bad news mate! You are too Dumb';
+		if (score <= 6) return 'You tried, but you need to improve';
+		if (score <= 9) return 'You are smart. Keep it up';
+		return 'You are on fire! Try another level';
+	};
+
+	// Shuffle questions once when the component mounts
+	useEffect(() => {
+		setShuffledQuestions(shuffle(gameData)); // Shuffle the questions
+	}, [gameData]);
+
+	// Shuffle options when a new question is loaded
+	useEffect(() => {
+		const currentQuestion = shuffledQuestions[index - 1]; // Get the current question
+		if (currentQuestion) {
+			setShuffledOptions(shuffle([...currentQuestion.options])); // Shuffle its options
 		}
-	}
+	}, [index, shuffledQuestions]);
+
+	// Update remark whenever score changes
+	useEffect(() => {
+		setremark(getRemark(score));
+	}, [score]);
 
 	return index <= 10 ? (
 		<div className='questionBox absolute z-10 w-[90%] mx-[5%] md:mt-[10vh]  '>
-			{levels
-				.filter((item) => item.id === index)
-				.map((e) => {
-					return (
-						<div key={e.id}>
-							{/* the question section */}
-							<div className=' text-xl text-white text-bold flex flex-col items-center justify-center gap-[10px] md:gap-[30px]'>
-								<p className=' rounded-full  text-center flex items-center justify-center text-2xl '>
-									{index}/10 ===== {e.level} Level
-								</p>
-								<p className='md:text-3xl text-xl md:text-left text-center text-[var(--secondary)]'>
-									{question} {e.name} {question2}
-								</p>
-							</div>
-							{/* the option section */}
-							<div className='option flex flex-wrap gap-[20px] mt-[10%]  md:mt-[40px] justify-center items-center md:flex-row flex-col  text-white'>
-								{e.options.map((option) => (
-									<div key={option}>
-										{' '}
-										<button
-											key={option}
-											className='p-[20px] border-[2px] border-[var(--white)] min-w-[60vw] md:min-w-[15vw] gap-[20px] rounded-lg'
-											onClick={(h) => {
-												if (option === e.answer) {
-													setscore((prevScore) => prevScore + 1);
-													h.target.style.backgroundColor = 'green';
-													getRemark();
-												} else {
-													setscore(score);
-													h.target.style.backgroundColor = 'red';
-													getRemark();
-												}
-
-												setTimeout(() => {
-													setindex((prevIndex) => prevIndex + 1);
-												}, 1000);
-											}}>
-											{option}
-										</button>
-									</div>
-								))}
-							</div>
-							<div className='w-full flex items-center justify-center  '>
-								<button
-									className='p-[20px] border-[2px] border-white text-white min-w-[60vw]  md:min-w-[25vw]  gap-[20px] rounded-lg bg-red-500 md:mt-[100px] mt-[30px]'
-									onClick={() => {
-										setindex(11);
-										shuffle();
-									}}>
-									Give Up
-								</button>
-							</div>
-						</div>
-					);
-				})}
+			{shuffledQuestions.length > 0 && (
+				<div>
+					{/* the question section */}
+					<div className='text-xl text-white text-bold flex flex-col items-center justify-center gap-[10px] md:gap-[30px]'>
+						<p className='rounded-full text-center flex items-center justify-center text-2xl '>
+							{index}/10 ===== {shuffledQuestions[index - 1].level} Level
+						</p>
+						<p className='md:text-3xl text-xl md:text-left text-center text-[var(--secondary)]'>
+							{question} {shuffledQuestions[index - 1].name} {question2}
+						</p>
+					</div>
+					{/* the option section */}
+					<div className='option flex flex-wrap gap-[20px] mt-[10%]  md:mt-[40px] justify-center items-center md:flex-row flex-col  text-white'>
+						{shuffledOptions.map((option) => (
+							<button
+								key={option}
+								className='p-[20px] border-[2px] border-[var(--white)] min-w-[60vw] md:min-w-[15vw] gap-[20px] rounded-lg'
+								onClick={(e) => {
+									if (option === shuffledQuestions[index - 1].answer) {
+										setscore((prevScore) => prevScore + 1);
+										e.target.style.backgroundColor = 'green';
+									} else {
+										e.target.style.backgroundColor = 'red';
+									}
+									setTimeout(() => {
+										setindex((prevIndex) => prevIndex + 1);
+									}, 1000);
+								}}>
+								{option}
+							</button>
+						))}
+					</div>
+					<div className='w-full flex items-center justify-center'>
+						<button
+							className='p-[20px] border-[2px] border-white text-white min-w-[60vw]  md:min-w-[25vw] gap-[20px] rounded-lg bg-red-500 md:mt-[100px] mt-[30px]'
+							onClick={() => {
+								setindex(11);
+							}}>
+							Give Up
+						</button>
+					</div>
+				</div>
+			)}
 		</div>
 	) : (
-		// this cater for when the index is now 11. It shows the score page
-
+		// This handles when the index is now 11 (score page)
 		<div className='scorepage md:w-[50vw] w-[80vw] h-[70vh] md:mx-[25vw] mx-[10vw] bg-[var(--secondbg)] rounded-md p-[10px] absolute z-10'>
 			<div className='result text-center h-[50%] outline-dashed outline-[var(--secondary)] rounded-t-lg p-[20px] flex flex-col items-center justify-center'>
 				<h2 className='text-xl text-[var(--secondary)] font-bold'>
-					Your score <br />{' '}
+					Your score <br />
 					<span className='text-3xl text-white font-normal'>
 						{(score / 10) * 100}%
 					</span>
 				</h2>
 				<h2 className='text-md font-bold mt-[20px] text-[var(--secondary)]'>
-					Remark <br />{' '}
+					Remark <br />
 					<span className='text-lg text-white font-normal'>{remark}</span>
 				</h2>
 			</div>
 			{/* The Button group */}
-			<div className='btns w-[80%] mx-[10%]  flex gap-[30px] justify-center items-center md:flex-row flex-col h-[50%]'>
+			<div className='btns w-[80%] mx-[10%] flex gap-[30px] justify-center items-center md:flex-row flex-col h-[50%]'>
 				<button
 					onClick={() => {
 						setindex(1);
@@ -141,8 +121,7 @@ const Game = ({ gameData, question, question2 }) => {
 						setremark(
 							"Giving up is okay. But doing that without even trying first? That's a dick move!"
 						);
-
-						shuffle();
+						setShuffledQuestions(shuffle(gameData)); // Reshuffle the questions
 					}}
 					className='p-[12px] md:w-[45%] w-full bg-[var(--secondary)] rounded-lg hover:bg-[var(--brownColor)] transition-color duration-[1s]'>
 					Retry
