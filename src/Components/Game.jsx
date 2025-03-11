@@ -124,7 +124,7 @@ const Game = ({ gameData, question, question2 }) => {
 				<h2 className='text-xl text-[var(--secondary)] font-bold'>
 					Your score <br />{' '}
 					<span className='text-3xl text-white font-normal'>
-						{(score / gameData.length) * 100}%
+						{(score / 10) * 100}%
 					</span>
 				</h2>
 				<h2 className='text-md font-bold mt-[20px] text-[var(--secondary)]'>
