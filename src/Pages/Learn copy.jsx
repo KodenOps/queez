@@ -4,35 +4,15 @@ import bg from '../Assets/design.png';
 import { BsTelephone } from 'react-icons/bs';
 import tempData from '../Data/Tempdata.js';
 import { mydata } from '../Data/API.js';
-
 const Learn = () => {
 	const [countryDB, setCountryDB] = useState([]);
 	const [countryName, setCountryName] = useState('');
 	const [tempCountryName, setTempCountryName] = useState('');
 
-	// useEffect(() => {
-	// 	fetch(
-	// 		'https://restcountries.com/v3.1/all?fields=name,capital,flags,coatOfArms;'
-	// 	)
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (Array.isArray(data)) {
-	// 				setCountryDB(data);
-	// 				console.log(data);
-	// 			} else {
-	// 				console.error('Unexpected API response:', data);
-	// 				setCountryDB([]);
-	// 			}
-	// 		})
-	// 		.catch((err) => {
-	// 			console.error('API fetch error:', err);
-	// 			setCountryDB([]);
-	// 		});
-	// }, []);
-
 	useEffect(() => {
 		setCountryDB(mydata);
 	}, []);
+
 	const normalizeName = (name) => {
 		return name
 			.split(' ')
