@@ -1,32 +1,32 @@
-import { SlGameController } from "react-icons/sl";
-import { BsDoorClosed } from "react-icons/bs";
-import { FiBook } from "react-icons/fi";
-import { MdOutlineCalendarViewMonth, MdOutlineFeedback } from "react-icons/md";
+import { SlGameController } from 'react-icons/sl';
+import { BsDoorClosed } from 'react-icons/bs';
+import { FiBook } from 'react-icons/fi';
+// import { MdOutlineCalendarViewMonth, MdOutlineFeedback } from 'react-icons/md';
 
 // icon array
 const iconsList = [
 	{
-		text: "Learn",
+		text: 'Learn',
 		icon: FiBook,
-		link: "/learn",
+		link: '/learn',
 	},
 	{
-		text: "Play Game",
+		text: 'Play Game',
 		icon: SlGameController,
-		link: "/selectgame",
+		link: '/selectgame',
 	},
+	// {
+	// 	text: "High Score",
+	// 	icon: MdOutlineCalendarViewMonth,
+	// },
+	// {
+	// 	text: "Give Feedback",
+	// 	icon: MdOutlineFeedback,
+	// },
 	{
-		text: "High Score",
-		icon: MdOutlineCalendarViewMonth,
-	},
-	{
-		text: "Give Feedback",
-		icon: MdOutlineFeedback,
-	},
-	{
-		text: "Quit",
+		text: 'Quit',
 		icon: BsDoorClosed,
-		link: "/",
+		link: '/',
 	},
 ];
 
